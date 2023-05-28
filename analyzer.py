@@ -9,6 +9,9 @@ import multiprocessing
 
 
 class StockDataAnalyzer:
+
+    polygon_api_key = "" 
+
     def __init__(self, stock_names_file):
         self.stock_names = pd.read_csv(stock_names_file)['0']
         self.data = []
@@ -19,7 +22,7 @@ class StockDataAnalyzer:
             time.sleep(0.01)  # sleep for 0.01 seconds
             current_date = str(datetime.today())[:10]
             one_year_ago = str(datetime.today() - timedelta(days=365))[:10]
-            URL = f'https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/{one_year_ago}/{current_date}?apiKey={polygon_api_key}'
+            URL = f'https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/{one_year_ago}/{current_date}?apiKey={self.polygon_api_key}'
             api_result = requests.get(url=URL)
             result_json = api_result.json()
 
